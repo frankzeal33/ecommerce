@@ -33,7 +33,7 @@ async function userSignInController(req,res){
             const tokenOption = {
                 httpOnly : true,
                 secure : true,
-                samesite: "None",
+                sameSite: "None",
                 maxAge: 30 * 24 * 60 * 60 * 1000
             }
 
@@ -47,11 +47,6 @@ async function userSignInController(req,res){
         }else{
             throw new Error("Please check Password")
         }
-
-
-
-
-
 
 
     }catch(err){

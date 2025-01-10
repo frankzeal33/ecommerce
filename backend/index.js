@@ -9,7 +9,8 @@ const router = require('./routes')
 const app = express()
 app.use(cors({
     origin : process.env.FRONTEND_URL,
-    credentials : true
+    credentials : true,
+    exposedHeaders: ["set-cookie"]
 }))
 
 app.use(express.json({ limit: '20mb' }))

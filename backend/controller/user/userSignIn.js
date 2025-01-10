@@ -24,29 +24,29 @@ async function userSignInController(req,res){
        console.log("checkPassoword",checkPassword)
 
        if(checkPassword){
-        const tokenData = {
-            _id : user._id,
-            email : user.email,
+            const tokenData = {
+                _id : user._id,
+                email : user.email,
+            }
+            const token = jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, { expiresIn: "30d"});
+
+            const tokenOption = {
+                httpOnly : true,
+                secure : true,
+                samesite: "none",
+                maxAge: 30 * 24 * 60 * 60 * 1000
+            }
+
+            res.cookie("token",token,tokenOption).status(200).json({
+                message : "Login successfully",
+                data : token,
+                success : true,
+                error : false
+            })
+
+        }else{
+            throw new Error("Please check Password")
         }
-        const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, { expiresIn: "30d"});
-
-        const tokenOption = {
-            httpOnly : true,
-            secure : true,
-            // samesite: "none",
-            sameSite: 'strict'
-        }
-
-        res.cookie("token",token,tokenOption).status(200).json({
-            message : "Login successfully",
-            data : token,
-            success : true,
-            error : false
-        })
-
-       }else{
-         throw new Error("Please check Password")
-       }
 
 
 

@@ -33,7 +33,7 @@ async function userSignInController(req,res){
             const tokenOption = {
                 httpOnly : true,
                 secure : true,
-                sameSite: 'strict',
+                samesite: "None",
                 maxAge: 30 * 24 * 60 * 60 * 1000
             }
 

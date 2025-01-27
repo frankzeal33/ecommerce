@@ -34,18 +34,18 @@ const Order = () => {
         </div>
         
 
-        <div className='p-4 w-full'>
+        <div className='px-4 w-full'>
             {
                 data.map((item, index) => (
-                    <div key={index}>
+                    <div key={index} className='mt-8'>
                        <p className='font-medium text-lg'>{moment(item.createdAt).format('LL')}</p>
                        <div className='border rounded'>
                           <div className='flex flex-col lg:flex-row justify-between'>
-                            <div>
+                            <div className='space-y-5'>
                               {
                                 item?.productDetails.map((product, index) => (
                                   <div key={index} className='flex gap-3 bg-slate-100'>
-                                    <img src={product.image[0]} className='w-28 h-28 bg-slate-200 object-scale-down p-2' />
+                                    <img src={product.image[0]} className='w-28 h-28 bg-slate-200 object-scale-down mix-blend-multiply transition-all p-2'/>
                                     <div>
                                       <div className='font-medium text-lg text-ellipsis line-clamp-1'>{product.name}</div>
                                       <div className='flex items-center gap-5'>
@@ -67,13 +67,15 @@ const Order = () => {
                                 <div className='text-lg font-medium'>Shipping Details:</div>
                                 {
                                   item.shipping_options.map((shipping, index) => (
-                                    <div className='ml-1' key={index}>Shipping Amount: {shipping.shipping_amount}</div>
+                                    <div className='ml-1' key={index}>Shipping Amount: {displayINRCurrency(shipping.shipping_amount)}</div>
                                   ))
                                 }
                               </div>
                             </div>
                           </div>
-                          <div className='font-semibold ml-auto w-fit lg:text-lg pr-4 pb-4'>Total Amount: {displayINRCurrency(item.totalAmount)}</div>
+                          <div className='bg-black mt-5'>
+                            <div className='font-semibold text-white ml-auto w-fit lg:text-lg py-2 px-4'>Total Amount: {displayINRCurrency(item.totalAmount)}</div>
+                          </div>    
                        </div>
                     </div>
                 ))

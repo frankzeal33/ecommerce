@@ -8,6 +8,7 @@ import {loadStripe} from '@stripe/stripe-js';
 const Cart = () => {
     const [data,setData] = useState([])
     const [loading,setLoading] = useState(false)
+    const [paymentLoading,setPaymentLoading] = useState(false)
     const context = useContext(Context)
     const loadingCart = new Array(4).fill(null)
 
@@ -115,7 +116,7 @@ const Cart = () => {
     }
 
     const handlePayment = async () => {
-
+        setPaymentLoading(true)
         const stripePromise = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
         const response = await fetch(SummaryApi.payment.url,{
             method : SummaryApi.payment.method,
@@ -133,7 +134,7 @@ const Cart = () => {
         if(responseData?.id){
             stripePromise.redirectToCheckout({ sessionId: responseData.id})
         }
-        console.log("payment response", responseData)
+        setPaymentLoading(false)
     }
 
     const totalQty = data.reduce((previousValue,currentValue)=> previousValue + currentValue.quantity,0)
@@ -141,10 +142,10 @@ const Cart = () => {
   return (
     <div className='container mx-auto min-h-[calc(100vh-8rem)]'>
         
-        <div className='text-center text-lg my-3'>
+        <div className='text-center text-lg my-4'>
             {
                 data.length === 0 && !loading && (
-                    <p className='bg-white py-5'>No Data</p>
+                    <p className='bg-white py-5 font-medium'>Cart is Empty</p>
                 )
             }
         </div>
@@ -216,7 +217,7 @@ const Cart = () => {
                                             <p>{displayINRCurrency(totalPrice)}</p>    
                                         </div>
 
-                                        <button className='bg-blue-600 p-2 text-white w-full mt-2' onClick={handlePayment}>Payment</button>
+                                        <button className='bg-blue-600 p-2 text-white w-full mt-2' onClick={handlePayment}>{paymentLoading ? "Loading..." : "Pay Now"}</button>
 
                                     </div>
                                 )

@@ -69,7 +69,7 @@ const Header = () => {
             </div>
 
 
-            <div className='flex items-center gap-7'>
+            <div className='flex items-center gap-5 md:gap-7'>
                 
                 <div className='relative flex justify-center'>
 

@@ -7,26 +7,17 @@ const router = require('./routes')
 
 
 const app = express()
+app.use(cors({
+    origin : process.env.FRONTEND_URL,
+    credentials : true,
+    exposedHeaders: ["set-cookie"]
+}))
 
 app.use(express.json({ limit: '20mb' }))
 app.use(express.urlencoded({ limit: '20mb', extended: true }))
 // app.use(express.json());
 // app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())
-
-app.use(cors({
-    origin : process.env.FRONTEND_URL,
-    credentials : true,
-    // exposedHeaders: ["set-cookie"]
-}))
-
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Accept, Content-Type")
-    res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL)
-    res.setHeader("Access-Control-Allow-Credentials", true)
-    res.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS, PATCH")
-    next();
-})
 
 app.use("/api",router)
 

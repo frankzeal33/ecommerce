@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 const SignUp = () => {
   const [showPassword,setShowPassword] = useState(false)
   const [showConfirmPassword,setShowConfirmPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [data,setData] = useState({
       email : "",
       password : "",
@@ -47,6 +48,7 @@ const SignUp = () => {
 
   const handleSubmit = async(e) =>{
       e.preventDefault()
+      setLoading(true)
 
       if(data.password === data.confirmPassword){
 
@@ -72,7 +74,7 @@ const SignUp = () => {
       }else{
         toast.error("Please check password and confirm password")
       }
-
+      setLoading(false)
   }
 
   return (
@@ -178,7 +180,7 @@ const SignUp = () => {
                             </div>
                         </div>
 
-                        <button className='bg-red-600 hover:bg-red-700 text-white px-6 py-2 w-full max-w-[150px] rounded-full hover:scale-110 transition-all mx-auto block mt-6'>Sign Up</button>
+                        <button className='bg-red-600 hover:bg-red-700 text-white px-6 py-2 w-full max-w-[150px] rounded-full hover:scale-110 transition-all mx-auto block mt-6'>{loading ? "Loading..." : "Sign Up"}</button>
 
                     </form>
 

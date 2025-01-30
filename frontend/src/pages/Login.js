@@ -9,6 +9,7 @@ import Context from '../context';
 
 const Login = () => {
     const [showPassword,setShowPassword] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [data,setData] = useState({
         email : "",
         password : ""
@@ -30,6 +31,7 @@ const Login = () => {
 
     const handleSubmit = async(e) =>{
         e.preventDefault()
+        setLoading(true)
 
         const dataResponse = await fetch(SummaryApi.signIn.url,{
             method : SummaryApi.signIn.method,
@@ -52,10 +54,8 @@ const Login = () => {
         if(dataApi.error){
             toast.error(dataApi.message)
         }
-
+        setLoading(false)
     }
-
-    console.log("data login",data)
     
   return (
     <section id='login'>
@@ -109,7 +109,7 @@ const Login = () => {
                             </Link>
                         </div>
 
-                        <button className='bg-red-600 hover:bg-red-700 text-white px-6 py-2 w-full max-w-[150px] rounded-full hover:scale-110 transition-all mx-auto block mt-6'>Login</button>
+                        <button className='bg-red-600 hover:bg-red-700 text-white px-6 py-2 w-full max-w-[150px] rounded-full hover:scale-110 transition-all mx-auto block mt-6'>{loading ? "Loading..." : "Login"}</button>
 
                     </form>
 

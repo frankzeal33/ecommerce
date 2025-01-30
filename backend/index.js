@@ -20,6 +20,13 @@ app.use(cors({
     // exposedHeaders: ["set-cookie"]
 }))
 
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Accept, Content-Type")
+    res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL)
+    res.setHeader("Access-Control-Allow-Credentials", true)
+    res.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, TRACE, OPTIONS, PATCH")
+    next();
+})
 
 app.use("/api",router)
 
